@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Set paths
+BASEDIR=/path/to/project
+DATADIR=${BASEDIR}/data
+HISAT2_BIN=/path/to/hisat2
+GENOME_INDEX_PREFIX=${BASEDIR}/hisat2_index/genome
+OUTDIR=${BASEDIR}/hisat2_output
+
+# Create output directory
+mkdir -p $OUTDIR
+
+# Sample list
+SAMPLES=("sample1" "sample2" "sample3")
+
+# Run HISAT2 alignment
+for SAMPLE in "${SAMPLES[@]}"; do
+  $HISAT2_BIN/hisat2 -p 4 \
+                     -x $GENOME_INDEX_PREFIX \
+                     -U ${DATADIR}/${SAMPLE}.fastq.gz \
+                     -S ${OUTDIR}/${SAMPLE}.sam
+  # Convert SAM to BAM and sort
+  samtools view -bS ${OUTDIR}/${SAMPLE}.sam | samtools sort -o ${OUTDIR}/${SAMPLE}_sorted.bam
+  rm ${OUTDIR}/${SAMPLE}.sam
+done

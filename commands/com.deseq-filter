@@ -1,0 +1,5 @@
+FILE=Results/WithGeneNames/gn_results_1mo_4mo
+
+cat ${FILE}.psiclass.csv | tr ',' ' ' | awk '{ if (($3>=15) && ($4<=-1.0 || $4>=1.0)) print $_; }' | wc -l
+cat ${FILE}.pval05.psiclass.csv | tr ',' ' ' | awk '{ if (($3>=15) && ($4<=-1.0 || $4>=1.0)) print $_; }' | wc -l
+cat ${FILE}.qval05.psiclass.csv | tr ',' ' ' | awk '{ if (($3>=15) && ($4<=-1.0 || $4>=1.0)) print $_; }' | wc -l

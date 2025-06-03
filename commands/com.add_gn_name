@@ -1,0 +1,29 @@
+#!/bin/bash -l
+
+BASEDIR=/path/to/your/BASEDIR/M1
+CMDDIR=${BASEDIR}/path_to_your_commandsfiles
+
+P_ANNOT=${BASEDIR}/Psiclass/WithGeneNames/psiclass_vote.withStrand.gtf
+G_ANNOT=${BASEDIR}/gencode.vM30.annotation.gtf
+
+ADDGN=${CMDDIR}/add_gn_name
+
+
+WORKDIR=${BASEDIR}/DESeq/Results
+
+mkdir -p ${WORKDIR}/WithGeneNames
+
+for i in results_1mo_4mo.psiclass.csv results_1mo_4mo.pval05.psiclass.csv results_1mo_4mo.qval05.psiclass.csv raw_counts.1mo_4mo.psiclass.csv normalized_counts.1mo_4mo.psiclass.csv
+do
+   ${ADDGN} ${P_ANNOT} < ${WORKDIR}/${i} > ${WORKDIR}/WithGeneNames/gn_${i}
+done
+
+for i in results_1mo_4mo.A.psiclass.csv results_1mo_4mo.pval05.A.psiclass.csv results_1mo_4mo.qval05.A.psiclass.csv raw_counts.1mo_4mo.A.psiclass.csv normalized_counts.1mo_4mo.A.psiclass.csv
+do
+   ${ADDGN} ${P_ANNOT} < ${WORKDIR}/${i} > ${WORKDIR}/WithGeneNames/gn_${i}
+done
+
+for i in results_1mo_4mo.gencode.csv results_1mo_4mo.pval05.gencode.csv results_1mo_4mo.qval05.gencode.csv raw_counts.1mo_4mo.gencode.csv normalized_counts.1mo_4mo.gencode.csv
+do
+   ${ADDGN} ${G_ANNOT} < ${WORKDIR}/${i} > ${WORKDIR}/WithGeneNames/gn_${i}
+done

@@ -1,0 +1,16 @@
+##!/bin/bash -l
+
+## load necessary modules
+module load cufflinks/2.2.1
+
+BASEDIR=/scratch16/lflorea1/projects/Coursera/M1/
+DATADIR=${BASEDIR}/Star
+WORKDIR=${BASEDIR}/Cuffdiff
+ANNOT=${BASEDIR}/Psiclass/WithGeneNames/psiclass_vote.withStrand.gtf
+
+CTRLBAMS=${DATADIR}/SRR3734796_Aligned.sortedByCoord.out.bam,${DATADIR}/SRR3734797_Aligned.sortedByCoord.out.bam,${DATADIR}/SRR3734798_Aligned.sortedByCoord.out.bam
+TESTBAMS=${DATADIR}/SRR3734820_Aligned.sortedByCoord.out.bam,${DATADIR}/SRR3734824_Aligned.sortedByCoord.out.bam,${DATADIR}/SRR3734825_Aligned.sortedByCoord.out.bam
+
+cuffdiff -o ${WORKDIR} -p 8 ${ANNOT} ${CTRLBAMS} ${TESTBAMS} &> cuffdiff.log
+
+exit;

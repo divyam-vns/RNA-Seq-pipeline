@@ -1,0 +1,1 @@
+cat Results/WithGeneNames/gn_results_1mo_4mo.psiclass.csv | tr ',' ' ' | awk '{ if (($3>=10) && ($4<=-1.0 || $4>=1.0) && ($7<=0.05)) print $_; }' | wc -l

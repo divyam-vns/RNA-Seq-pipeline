@@ -1,0 +1,26 @@
+#!/bin/bash -l
+
+module load STAR/2.7.10a
+module load samtools/1.15.1
+
+### Gsn: 2:35146392-35197904
+
+# extract Gencode gene annotations
+grep -w Gsn ../gencode.vM30.annotation.gtf > Gsn.gencode.vM39.gtf
+
+# extract Psiclass gene and transcript assemblies
+grep -w Gsn ../Psiclass/WithGeneNames/psiclass_vote.gtf > Gsn.psiclass.gtf
+
+# index alignment files
+for i in SRR3734796 SRR3734797 SRR3734798 SRR3734820 SRR3734824 SRR3734825
+do
+  samtools index ../Star/${i}_Aligned.sortedByCoord.out.bam
+done
+
+# extract alignments in the range
+for i in SRR3734796 SRR3734797 SRR3734798 SRR3734820 SRR3734824 SRR3734825
+do
+  
+  samtools view -b ../Star/${i}_Aligned.sortedByCoord.out.bam "2:35146392-35197904" > Gsn.${i}.bam
+  samtools index Gsn.${i}.bam
+done

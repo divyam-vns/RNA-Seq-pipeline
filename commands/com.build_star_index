@@ -1,0 +1,10 @@
+DATADIR=/scratch4/lflorea1/shared/genomes/mm39/
+
+module load STAR/2.7.10a
+
+
+STAR --runThreadN 4 --runMode genomeGenerate --genomeDir ${DATADIR}/star --genomeFastaFiles ${DATADIR}/mm39c.fa
+
+wait
+
+exit;

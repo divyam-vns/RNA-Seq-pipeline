@@ -1,0 +1,30 @@
+#!/bin/bash -l
+  
+## load necessary modules
+#module load samtools/1.15.1
+
+BASEDIR=/scratch16/lflorea1/projects/Coursera/M1/
+ALNDIR=${BASEDIR}/Star
+WORKDIR=${BASEDIR}/Psiclass
+ANNOT=${BASEDIR}/gencode.vM30.annotation.gtf
+
+SWDIR=/scratch4/lflorea1/shared/sw/src/PsiCLASS-1.0.3/
+PSICLASS=${SWDIR}/psiclass
+ADDGENENAME=${SWDIR}/add-genename
+CMDDIR=${BASEDIR}/commands
+ADDSTRAND=${CMDDIR}/add-strand
+
+#assembly
+${PSICLASS} --lb ${WORKDIR}/bamlist.psiclass -o ${WORKDIR}/psiclass -p 10 &> psiclass.log
+
+#exit;
+
+#add annotated gene names
+mkdir -p ${WORKDIR}/WithGeneNames
+${ADDGENENAME} ${ANNOT} ${WORKDIR}/psiclass_gtf.list -o ${WORKDIR}/WithGeneNames
+
+# import strand and remove no-strand entries from the reference annotation; optionally, remove unknown genes (grep -v "novel")
+${ADDSTRAND} ${ANNOT} -r < ${WORKDIR}/WithGeneNames/psiclass_vote.gtf > ${WORKDIR}/WithGeneNames/psiclass_vote.withStrand.gtf
+
+wait
+

@@ -1,0 +1,16 @@
+#!/bin/bash -l
+
+## load necessary modules
+module load samtools/1.15.1
+
+DATADIR=/scratch16/lflorea1/projects/Coursera/M1/Star
+WORKDIR=/scratch16/lflorea1/projects/Coursera/M1/Sorted
+
+for i in SRR3734796 SRR3734797 SRR3734798 SRR3734820 SRR3734824 SRR3734825
+do
+  samtools sort -n ${DATADIR}/${i}_Aligned.sortedByCoord.out.bam --threads 8 -O BAM -o ${WORKDIR}/${i}.so.bam &> ${WORKDIR}/${i}.sort.log
+done
+
+wait
+
+exit;

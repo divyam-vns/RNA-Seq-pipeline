@@ -1,0 +1,1 @@
+grep -w OK gene_exp.diff | awk '{ if ((($10>=0.5) || ($10<=-0.5)) && ($12<0.05)) print $_; }' | wc -l

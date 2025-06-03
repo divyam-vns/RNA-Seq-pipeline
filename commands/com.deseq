@@ -1,0 +1,11 @@
+#!/bin/bash -l
+
+# load modules
+module load GCC/11.3.0
+module load R/4.2.1-foss-2022a
+
+nohup R CMD BATCH deseq_1mo_4mo.R
+
+wait
+
+exit
