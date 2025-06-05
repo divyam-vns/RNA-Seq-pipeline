@@ -1,0 +1,56 @@
+
+MntJUlip Output File Guide
+===========================
+
+After running MntJUlip for intron-level splicing analysis, your output directory will contain several result files. Here's what each one means:
+
+1. *.introns
+-------------
+- Description: Lists all detected introns.
+- Includes: chromosome, start, end, strand, read counts, edit counts.
+- Use: For filtering, gene assignment, and coverage stats.
+
+2. *.counts
+------------
+- Description: Raw intron read counts per sample.
+- Format: Tab-separated table with introns as rows and samples as columns.
+
+3. *.DSR.tsv (Differential Splicing Ratio)
+------------------------------------------
+- Description: Tests for changes in intron usage ratio between conditions.
+- Includes: Intron ID, gene, ratio per condition, fold change, p-value, adjusted p-value.
+- Use: Detects events like exon skipping.
+
+4. *.DSA.tsv (Differential Splicing Abundance)
+----------------------------------------------
+- Description: Tests for differences in total intron read counts.
+- Includes: Same structure as DSR.
+- Use: Highlights introns that increase/decrease strongly.
+
+5. *.signif.tsv or *.sig.dsr/dsa.tsv
+-------------------------------------
+- Description: Filtered list of significant introns from DSR/DSA.
+- Criteria: FDR < 0.05, fold change thresholds.
+
+6. *.json or *.log
+-------------------
+- Description: Metadata, parameters, and logs.
+- Use: Reproducibility and debugging.
+
+7. *.genes or *.assigned_genes
+-------------------------------
+- Description: Maps introns to genes using the GTF annotation.
+- Use: Biological interpretation.
+
+How to Interpret Results
+-------------------------
+Example row from DSR.tsv:
+chr1:100-200:+   ABC1   0.75   0.35   2.1   0.0005   0.01
+- Intron in gene ABC1 has a higher splicing ratio in condition 1.
+- Fold change: 2.1x
+- Adjusted p-value: 0.01 → statistically significant
+
+Visualization Tips
+-------------------
+- Use IGV or Sashimi plots for individual introns.
+- Plot DSR/DSA results using heatmaps or volcano plots in R/Python.
