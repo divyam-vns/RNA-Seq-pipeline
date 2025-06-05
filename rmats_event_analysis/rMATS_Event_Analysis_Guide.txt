@@ -1,0 +1,46 @@
+
+# Step-by-Step Guide to Event-Level Analysis with rMATS
+
+## 🧬 Overview of rMATS Output
+
+rMATS outputs:
+- `summary.txt`: Summary of detected events
+- `*.MATS.JC.txt` and `*.MATS.JCEC.txt`: Event-level data for 5 splicing types
+- `fromGTF.*.txt` and `fromGTF.novelEvents.*.txt`: Annotated and novel splicing events
+
+## ✅ Step 1: Start with `summary.txt`
+
+- Lists events: SE, MXE, A5SS, A3SS, RI
+- Shows number of significant events using JC and JCEC
+- Uses q-value < 0.05 for significance
+
+## ✅ Step 2: JC vs JCEC Files
+
+- JC: Junction counts only (spliced reads)
+- JCEC: Junction + exon body reads (more sensitive)
+
+## ✅ Step 3: Explore `*.MATS.JC.txt` or `*.MATS.JCEC.txt`
+
+Key columns:
+- Inclusion/Skipping counts for both samples
+- IncLevel1 / IncLevel2: PSI values
+- IncLevelDifference: ΔPSI = PSI(Sample1) - PSI(Sample2)
+- FDR (q-value) for significance
+
+## ✅ Step 4: Filter Significant Events (Example for SE.MATS.JC.txt)
+
+```bash
+awk 'NR>1 && $20 < 0.05 && ($23 > 0.05 || $23 < -0.05)' SE.MATS.JC.txt > SE_filtered.txt
+```
+
+## ✅ Step 5: Understand `fromGTF.*.txt`
+
+These map events to known annotation and novel events.
+
+## ✅ Step 6: Visualize PSI and ΔPSI
+
+Create histograms and volcano plots using Python.
+
+## Thresholds
+- q-value < 0.05
+- |ΔPSI| ≥ 0.05
